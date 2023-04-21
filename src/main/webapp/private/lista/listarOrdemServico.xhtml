@@ -1,0 +1,199 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{ordemServicoMB.prepareSave()}"
+				immediate="true"
+				title="Clique neste botão para cadastrar uma nova O.S."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Nova O.S.
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{ordemServicoMB.prepareSave()}"
+				immediate="true"
+				title="Clique neste botão para cadastrar uma nova O.S."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Nova O.S.
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Ordem de Serviços</ui:define>
+
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="team.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Listagem de Ordens de Serviços" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Lista de ordens de serviços cadastradas no sistema." />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formulario" prependId="false">
+			<p:messages autoUpdate="true" closable="true" />
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<h:panelGroup
+					rendered="#{escopoSessaoBean.usuarioLogado.administrador}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<h:outputText value="Loja: " styleClass="myLabel" />
+						<br />
+						<p:selectOneMenu id="loja" autoWidth="false"
+							value="#{ordemServicoMB.ordemServicoFilter.loja}"
+							converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+							converter="genericConverter">
+							<f:selectItem itemLabel="Selecione loja" noSelectionOption="true" />
+							<f:selectItems value="#{lojaMB.lojas}" var="loja"
+								itemLabel="#{loja.nome}" />
+						</p:selectOneMenu>
+					</div>
+				</h:panelGroup>
+				<!-- 				<h:panelGroup> -->
+				<!-- 					<div class="ui-g-12 ui-md-6 ui-lg-3"> -->
+				<!-- 						<h:outputText value="OrdemServico:  " styleClass="myLabel" /> -->
+				<!-- 						<br /> -->
+				<!-- 												<p:inputText value="#{ordemServicoMB.ordemServicoFilter.nome}" /> -->
+				<!-- 					</div> -->
+				<!-- 				</h:panelGroup> -->
+
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<p:commandButton value="Buscar" icon="fa fa-search"
+						style="margin-top:18px;" styleClass="btn btn-primary"
+						action="#{ordemServicoMB.list()}"
+						update=":formulario:tabelaOrdemServico" />
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<p:commandButton id="report" style="margin-top:18px;"
+						actionListener="#{ordemServicoMB.gerarPDF}" icon="fa fa-print"
+						styleClass="btn btn-success" value="Gerar PDF"
+						onclick="this.form.target='_blank'" ajax="false">
+					</p:commandButton>
+				</div>
+			</div>
+
+			<br />
+
+			<p:dataTable id="tabelaOrdemServico"
+				value="#{ordemServicoMB.ordemServicos}" lazy="true" var="entity"
+				paginator="true" rows="20" reflow="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" rowIndexVar="row"
+				emptyMessage="Nenhum registro encontrado." filterEvent="enter"
+				widgetVar="dadosTabela" paginatorAlwaysVisible="false">
+
+				<p:column headerText="Cadastrado em" width="180">
+					<h:outputText value="#{entity.dataAbertura}" >
+					<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss"/>
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Loja">
+					<h:outputText value="#{entity.loja.nome}" />
+				</p:column>
+
+				<p:column headerText="Detalhes" width="70" styleClass="Center">
+					<p:commandLink oncomplete="PF('dados').show()" process="@this"
+						update=":formulario:dados" icon="fa fa-plus">
+						<!-- 						<i class="material-icons GrayDark">remove_red_eye</i> -->
+						<i class="material-icons GrayDark">description</i>
+						<f:setPropertyActionListener value="#{entity}"
+							target="#{clienteMB.cliente}" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Editar" width="70" styleClass="centralizado">
+					<p:link id="lnkEditar" outcome="#{ordemServicoMB.prepareUpdate()}">
+						<i class="material-icons GrayDark">border_color</i>
+						<f:param name="id" value="#{entity.id}" />
+					</p:link>
+					<p:outputLabel rendered="#{!entity.status}"
+						title="Editar desabilitado">
+						<i class="material-icons GrayDark">border_color</i>
+					</p:outputLabel>
+				</p:column>
+
+			</p:dataTable>
+
+			<br />
+
+			<p:panel styleClass="panel-buttons">
+				<h:panelGrid columns="10">
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Green">check_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="O.S. ativa" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Red">remove_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="O.S. inativa" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons GrayDark">description</i>
+							<p:spacer width="5"></p:spacer>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Visualizar O.S." />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons GrayDark">border_color</i>
+							<p:spacer width="5"></p:spacer>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Editar O.S." />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+
+
+			<p:dialog modal="true" id="dados" widgetVar="dados" resizable="false"
+				width="75%" header="Visualização">
+
+				<h:panelGrid columns="2" style="margin-top: 10px;" cellpadding="5px"
+					id="grid-cadastro">
+				</h:panelGrid>
+				<br />
+
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

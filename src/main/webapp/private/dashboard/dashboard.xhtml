@@ -1,0 +1,263 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink oncomplete="PF('dados').show()" process="@this"
+				update="dados" styleClass="btn btn-orange" rendered="#{escopoSessaoBean.usuarioLogado.administrador}"
+				title="Clique neste botão para listar os usuários cadastrados no sistema.">
+				<div class="fa fa-list-alt icon-link" />
+				Selecionar a Loja
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<!-- 		<h:form> -->
+		<!-- 			<p:commandLink action="Teste.xhtml?faces-redirect=true" -->
+		<!-- 				styleClass="btn btn-orange" value="Cadastrar" /> -->
+		<!-- 		</h:form> -->
+	</ui:define>
+
+	<ui:define name="titulo-pagina">
+		<h:outputText value="Dashboard" />
+	</ui:define>
+
+	<ui:define name="imagem">
+		<p:graphicImage library="img" name="dashboard.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Dashboard" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText value="Análises consolidadas." />
+	</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet library="css" name="schedule.css" />
+		<h:outputScript library="js" name="schedule.js" />
+
+		<div class="ui-g-12 ui-md-12">
+			<p:messages autoUpdate="true" closable="true" />
+		</div>
+
+		<!-- 		<h:panelGroup rendered="#{escopoSessaoBean.usuarioLogado.gerente}"> -->
+		<!-- 			<div class="ui-g-12 ui-md-12"> -->
+		<!-- 				<div class="info-box"> -->
+		<!-- 					<span class="info-box-icon bg-yellow"><i -->
+		<!-- 						class="fa fa-exclamation-triangle"></i></span> -->
+		<!-- 					<div class="info-box-content"> -->
+		<!-- 						<span class="info-box-text">Atenção</span> <span -->
+		<!-- 							class="info-box-number"> <p:link id="lnkEditarGerente" -->
+		<!-- 								value="Prezado #{escopoSessaoBean.usuarioLogado.nome}, você tem #{dashboardMB.quantidadeDeMetas} meta(s) para serem distribuidas " -->
+		<!-- 								outcome="#{dashboardMB.linkDistribuicoesParaValidar()}"> -->
+		<!-- 								<f:param name="situacao" -->
+		<!-- 									value="#{dashboardMB.paramCodificado(0)}" /> -->
+		<!-- 							</p:link> -->
+		<!-- 						</span> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+		<!-- 		</h:panelGroup> -->
+
+		<!-- 		<h:panelGroup -->
+		<!-- 			rendered="#{escopoSessaoBean.usuarioLogado.administrador}"> -->
+		<!-- 			<div class="ui-g-12 ui-md-12"> -->
+		<!-- 				<div class="info-box"> -->
+		<!-- 					<span class="info-box-icon bg-yellow"><i -->
+		<!-- 						class="fa fa-exclamation-triangle"></i></span> -->
+		<!-- 					<div class="info-box-content"> -->
+		<!-- 						<span class="info-box-text">Atenção</span> <span -->
+		<!-- 							class="info-box-number"> <p:link id="lnkEditarAdmin" -->
+		<!-- 								value="Prezado #{escopoSessaoBean.usuarioLogado.nome}, você tem #{dashboardMB.quantidadeDeMetas} distribuições para serem validadas " -->
+		<!-- 								outcome="#{dashboardMB.linkDistribuicoesParaValidar()}"> -->
+		<!-- 								<f:param name="situacao" -->
+		<!-- 									value="#{dashboardMB.paramCodificado(2)}" /> -->
+		<!-- 							</p:link> -->
+		<!-- 						</span> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+		<!-- 		</h:panelGroup> -->
+
+
+
+		<!-- 		<div class="dashboard-panel-titulo"> -->
+		<!-- 			<i class="fa  fa-fw	fa-rocket" /> Solicitações por Status -->
+		<!-- 		</div> -->
+		<div>
+			<div class="row">
+
+				<div class="col-lg-3 col-xs-6">
+					<!-- small box -->
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>#{dashboardMB.totalLojas}</h3>
+							<p>Lojas</p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-bag"></i>
+						</div>
+						<p:link href="../lista/listarLoja.xhtml" class="small-box-footer">Mais informações<i
+								class="fa fa-arrow-circle-right"></i>
+						</p:link>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3>#{dashboardMB.totalColaboradores}</h3>
+							<p>Colaboradores</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-user"></i>
+						</div>
+						<p:link href="../lista/listarColaborador.xhtml"
+							class="small-box-footer">Mais informações<i
+								class="fa fa-arrow-circle-right"></i>
+						</p:link>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-green ">
+						<div class="inner">
+							<h3>R$ 15.389,00</h3>
+							<p>Contas a Receber</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa fa-star"></i>
+						</div>
+						<p:link href="#" class="small-box-footer">Mais informações<i
+								class="fa fa-arrow-circle-right"></i>
+						</p:link>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-xs-6">
+
+					<div class="small-box bg-red">
+						<div class="inner">
+							<h3>R$ 8.250,00</h3>
+							<p>Contas a Pagar</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-star-half-o"></i>
+						</div>
+						<p:link href="#" class="small-box-footer">Mais informações<i
+								class="fa fa-arrow-circle-right"></i>
+						</p:link>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h:panelGroup>
+			<div class="dashboard-panel-titulo">
+				<i class="fa  fa-fw	fa-rocket" /> Análise temporal
+			</div>
+			<p:panelGrid columns="1" style="margin-top: 20px;" layout="grid"
+				columnClasses="ui-grid-col-12">
+
+				<p:panel header="Quantidade de colaboradores por loja">
+					<p:lineChart model="#{dashboardMB.lineModel}"
+						style="width: 100%; height: 300px;" />
+				</p:panel>
+
+			</p:panelGrid>
+		</h:panelGroup>
+
+
+		<h:panelGroup>
+			<div class="dashboard-panel-titulo">
+				<i class="fa  fa-fw	fa-rocket" /> Análise quantitativa
+			</div>
+			<p:panelGrid columns="3" style="margin-top: 20px;" layout="grid"
+				columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4">
+
+				<p:panel header="Quantidade de colaboradores por loja">
+					<p:barChart model="#{dashboardMB.hbarModel}"
+						style="width: 100%; height: 200px;" />
+				</p:panel>
+				<p:panel header="Análise por Lojas">
+					<p:pieChart model="#{dashboardMB.pieModel}"
+						style="width: 100%; height: 200px;" />
+				</p:panel>
+				<p:panel header="Quantidade de colaboradores por loja">
+					<p:barChart model="#{dashboardMB.hbarModel}"
+						style="width: 100%; height: 200px;" />
+				</p:panel>
+			</p:panelGrid>
+		</h:panelGroup>
+
+		<p:dialog modal="true" id="dados" widgetVar="dados" resizable="false"
+			width="75%" header="Visualização">
+
+			<h:form id="formulario" prependId="false">
+				<p:messages autoUpdate="true" closable="true" />
+
+				<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+					<div class="ui-g-12 ui-md-4 ui-lg-4">
+						<h:outputText value="Nome: " styleClass="myLabel" />
+						<p:inputText value="#{lojaMB.lojaFilter.nome}" />
+					</div>
+
+					<div class="ui-g-12 ui-md-4 ui-lg-2">
+						<p:commandButton value="Buscar" style="margin-top: 18px"
+							icon="fa fa-search" styleClass="btn btn-orange"
+							action="#{lojaMB.list()}" update=":formulario:tabelaCarteira" />
+					</div>
+
+				</div>
+				<br />
+
+				<p:dataTable id="tabelaCarteira" value="#{lojaMB.lazy}" lazy="true"
+					var="entity" paginator="true" rows="20" reflow="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{currentPage} de {totalPages}"
+					paginatorPosition="bottom" rowIndexVar="row"
+					emptyMessage="Nenhum registro encontrado." filterEvent="enter"
+					widgetVar="dadosTabela" paginatorAlwaysVisible="false">
+
+					<p:column headerText="CNPJ" styleClass="centralizado" width="150">
+						<h:outputText value="#{entity.cnpj}" />
+					</p:column>
+
+					<p:column id="nome" headerText="Razão Social">
+						<h:outputText value="#{entity.razaoSocial}" />
+					</p:column>
+
+					<p:column id="identi" headerText="Identificação">
+						<h:outputText value="#{entity.nome}" />
+					</p:column>
+
+					<p:column headerText="Selecionar loja" styleClass="centralizado" width="150">
+						<p:commandLink process="@this" update="dados"
+							action="#{dashboardMB.selecionarLoja}"
+							styleClass="btn btn-yellow"
+							title="Clique neste botão para listar os usuários cadastrados no sistema.">
+							<div class="fa fa-check-square-o icon-link" />
+				Clique aqui
+				<f:setPropertyActionListener value="#{entity}"
+								target="#{dashboardMB.lojaSelecionada}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+				<br />
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

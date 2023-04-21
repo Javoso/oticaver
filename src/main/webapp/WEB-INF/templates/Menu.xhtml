@@ -1,0 +1,195 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<!-- sidebar: style can be found in sidebar.less -->
+	<section class="sidebar">
+
+		<!-- Sidebar user panel (optional) -->
+		<div class="user-panel">
+			<div class="pull-left image">
+
+				<p:graphicImage library="img" name="avatar.png" class="img-circle"
+					alt="User Image"
+					rendered="#{escopoSessaoBean.usuarioLogado.foto == null}" />
+				<p:graphicImage
+					rendered="#{escopoSessaoBean.usuarioLogado.foto != null}"
+					value="#{recuperaImagemMB.image}" class="img-circle"
+					alt="User Image">
+					<f:param name="idUsuario"
+						value="#{escopoSessaoBean.usuarioLogado.id}"></f:param>
+				</p:graphicImage>
+
+			</div>
+			<div class="pull-left info">
+				<p>
+					<p:outputLabel styleClass="bg-branco"
+						value="#{escopoSessaoBean.usuarioLogado.loja.nome}" />
+				</p>
+				<p>#{escopoSessaoBean.usuarioLogado.nome}</p>
+				<!-- Status -->
+				<h6>
+					<span id="sessao"></span>
+				</h6>
+			</div>
+		</div>
+
+		<!-- Sidebar Menu -->
+		<ul class="sidebar-menu">
+			<li class="treeview"><p:link href="../dashboard/dashboard.xhtml">
+					<i class="fa  fa-fw  fa-dashboard" />
+					<span>Dashboard</span>
+				</p:link></li>
+
+			<li class="treeview"><p:link href="../lista/listarOrdemServico.xhtml">
+					<i class="fa  fa-fw  fa-line-chart" />
+					<span>Ordem de Serviço</span>
+				</p:link></li>
+			<li class="treeview"><p:link href="../dashboard/dashboard.xhtml">
+					<i class="fa fa-money" />
+					<span>Vendas</span>
+				</p:link></li>
+
+
+			<!-- 			<li class="header">Dados</li> -->
+			<!-- Optionally, you can add icons to the links -->
+
+			<!-- 			<li class="header">Gerencial</li> -->
+			<h:panelGroup
+				>
+				<li class="treeview"><a href="#"> <i
+						class="fa  fa-fw  fa-th-list" /> <span>Cadastros</span> <i
+						class="fa fa-angle-left pull-right"></i>
+				</a>
+
+					<ul class="treeview-menu">
+						<li ><p:link href="../lista/listarCliente.xhtml">
+								<i class="fa  fa-fw fa-users" />
+								<span>Clientes</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarProduto.xhtml">
+								<i class="fa  fa-fw  fa-briefcase" />
+								<span>Produtos</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarLoja.xhtml">
+								<i class="fa fa-university" />
+								<span>Lojas</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarColaborador.xhtml">
+								<i class="fa  fa-fw  fa-handshake-o" />
+								<span>Colaboradoes</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarFornecedor.xhtml">
+								<i class="fa  fa-fw  fa-shopping-basket" />
+								<span>Fornecedores</span>
+							</p:link></li>
+					</ul></li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{escopoSessaoBean.usuarioLogado.perfilUser ne 'GERENTE'}">
+				<li class="treeview"><a href="#"> <i
+						class="fa  fa-fw  fa-th-list" /> <span>Tabelas</span> <i
+						class="fa fa-angle-left pull-right"></i>
+				</a>
+
+					<ul class="treeview-menu">
+						<!-- 								<li><p:link href="../lista/listarLoja.xhtml"> -->
+						<!-- 										<i class="fa  fa-fw  fa-briefcase" /> -->
+						<!-- 										<span>Lojas</span> -->
+						<!-- 									</p:link></li> -->
+						<li><p:link href="../lista/listarFuncao.xhtml">
+								<i class="fa  fa-fw fa-users" />
+								<span>Funções</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarGrupoProduto.xhtml">
+								<i class="fa  fa-fw fa-sitemap" />
+								<span>Grupos</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarGrife.xhtml">
+								<i class="fa  fa-fw fa-eye" />
+								<span>Grifes</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarUnidade.xhtml">
+								<i class="fa  fa-fw fa-suitcase" />
+								<span>Unidades</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarOrigemCliente.xhtml">
+								<i class="fa  fa-fw fa-yelp" />
+								<span>Origem Clientes</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarMedico.xhtml">
+								<i class="fa  fa-fw fa-user-md" />
+								<span>Médico/Opto.</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarResponsavelTecnico.xhtml">
+								<i class="fa  fa-fw fa-stethoscope" />
+								<span>Resp. Técnico</span>
+							</p:link></li>
+						<li><p:link href="../lista/listarProfissao.xhtml">
+								<i class="fa  fa-fw fa-male" />
+								<span>Profissões</span>
+							</p:link></li>
+					</ul></li>
+			</h:panelGroup>
+			<!-- 			<h:panelGroup> -->
+			<!-- 				<li class="treeview"><a href="#"> <i class="fa fa-tasks"></i> -->
+			<!-- 						<span>Controle</span> <i class="fa fa-angle-left pull-right"></i> -->
+			<!-- 				</a> -->
+
+			<!-- 					<ul class="treeview-menu"> -->
+
+			<!-- 												<li><p:link href="../lista/listarControleMetaLoja.xhtml"> -->
+			<!-- 														<i class="fa  fa-fw  fa-line-chart" /> -->
+			<!-- 														<span>Meta por loja</span> -->
+			<!-- 													</p:link></li> -->
+
+			<!-- 												<li><p:link href="#"> -->
+			<!-- 																					<p:link href="../lista/listarFolhaPagamento.xhtml"> -->
+			<!-- 														<i class="fa fa-money"></i> -->
+			<!-- 														<span>Folha de pagamento</span> -->
+			<!-- 													</p:link></li> -->
+
+			<!-- 												<li><p:link href="#" -->
+			<!-- 														rendered="#{escopoSessaoBean.usuarioLogado.perfilUser ne 'GERENTE'}"> -->
+			<!-- 																					<p:link href="../lista/listarPlanoFerias.xhtml"> -->
+			<!-- 														<i class="fa  fa-fw  fa-plane" /> -->
+			<!-- 														<span>Plano de férias</span> -->
+			<!-- 													</p:link></li> -->
+			<!-- 					</ul></li> -->
+			<!-- 			</h:panelGroup> -->
+
+			<h:panelGroup
+				rendered="#{escopoSessaoBean.usuarioLogado.perfilUser ne 'GERENTE'}">
+				<li class="treeview"><a href="#"> <i class="fa fa-lock"></i>
+						<span>Segurança</span> <i class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li><p:link href="../cadastro/cadastrarUsuario.xhtml">
+								<i class="fa  fa-fw fa-plus-circle" />
+								<span>Cadastrar usuários</span>
+							</p:link></li>
+
+						<li><p:link href="../lista/listarUsuario.xhtml">
+								<i class="fa  fa-fw  fa-user" />
+								<span>Listar usuários</span>
+							</p:link></li>
+					</ul></li>
+			</h:panelGroup>
+
+			<h:panelGroup
+				rendered="#{escopoSessaoBean.usuarioLogado.perfilUser ne 'GERENTE'}">
+				<li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
+						<span>Configurações</span> <i class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li><p:link href="../configuracao/configuracaoEmail.xhtml">
+								<i class="fa  fa-fw fa-envelope-o" />
+								<span>Paramêtros de Email</span>
+							</p:link></li>
+					</ul></li>
+			</h:panelGroup>
+		</ul>
+		<!-- /.sidebar-menu -->
+	</section>
+	<!-- /.sidebar -->
+</ui:composition>

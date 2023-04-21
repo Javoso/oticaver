@@ -1,0 +1,760 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{ordemServicoMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as ordemServicoes cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{ordemServicoMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as ordemServicoes cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Cadastrar Ordem de Serviço</ui:define>
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="checklist.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Cadastrar Ordem de Serviço"
+			rendered="#{ordemServicoMB.ordemServico.id == null}" />
+		<h:outputText value="Atualizar Ordem de Serviço"
+			rendered="#{ordemServicoMB.ordemServico.id != null}" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Informe campos obrigatórios para cadastrar uma O.S."
+			rendered="#{ordemServicoMB.ordemServico.id == null}" />
+		<h:outputText
+			value="Informe campos obrigatórios para atualizar a O.S."
+			rendered="#{ordemServicoMB.ordemServico.id != null}" />
+	</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="Formulario">
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<p:tabView prependId="false" style="width: 100% !important">
+					<p:tab title="Dados Pessoais">
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="Loja: " styleClass="myLabel" />
+							<h:outputText value=" * " styleClass="campoObrigatorio" />
+							<br />
+							<p:selectOneMenu id="loja" autoWidth="true"
+								value="#{ordemServicoMB.ordemServico.loja}"
+								converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+								converter="genericConverter">
+								<f:selectItem itemLabel="Selecione loja"
+									noSelectionOption="true" />
+								<f:selectItems value="#{lojaMB.lojas}" var="loja"
+									itemLabel="#{loja.nome}" />
+							</p:selectOneMenu>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="Tipo O.S.: " styleClass="myLabel" />
+							<h:outputText value=" * " styleClass="campoObrigatorio" />
+							<p:selectOneMenu id="tipo" autoWidth="true"
+								value="#{ordemServicoMB.ordemServico.tipoOrdemServico}">
+								<f:selectItem itemLabel="Selecione o tipo"
+									noSelectionOption="true" />
+								<f:selectItems value="#{ordemServicoMB.tiposOrdens()}" var="t"
+									itemLabel="#{t.descricao}" />
+							</p:selectOneMenu>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="Previsão de Entrega: " styleClass="myLabel" />
+							<p:calendar
+								value="#{ordemServicoMB.ordemServico.previsaoEntrega}"
+								pattern="dd/MM/yyyy hh:mm:ss" showHour="false">
+							</p:calendar>
+						</div>
+
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="Funcionário: " styleClass="myLabel" />
+							<h:outputText value=" * " styleClass="campoObrigatorio" />
+							<p:autoComplete
+								value="#{ordemServicoMB.ordemServico.colaborador}"
+								autocomplete="true" id="col"
+								completeMethod="#{colaboradorMB.getColaboradorAutoComplete}"
+								forceSelection="true" minQueryLength="1" maxResults="30"
+								dropdown="true" required="true"
+								requiredMessage="Funcionário Obrigatório"
+								converterMessage="Não foi possível selecionar a loja ao converter o objeto)"
+								converter="genericConverter" var="l" itemLabel="#{l.nome}"
+								itemValue="#{l}" placeholder="Pesquise pelo nome da operação">
+							</p:autoComplete>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="Cliente: " styleClass="myLabel" />
+							<h:outputText value=" * " styleClass="campoObrigatorio" />
+							<p:autoComplete value="#{ordemServicoMB.ordemServico.cliente}"
+								autocomplete="true" id="cli"
+								completeMethod="#{clienteMB.getClienteAutoComplete}"
+								forceSelection="true" minQueryLength="1" maxResults="30"
+								dropdown="true" required="true"
+								requiredMessage="Funcionário Obrigatório"
+								converterMessage="Não foi possível selecionar a loja ao converter o objeto)"
+								converter="genericConverter" var="l" itemLabel="#{l.nome}"
+								itemValue="#{l}" placeholder="Pesquise pelo nome da operação">
+							</p:autoComplete>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4"></div>
+						<div class="ui-lg-12" />
+						<br />
+						<br />
+
+						<div class="ui-g-12 ui-md-6 ui-lg-12">
+
+							<h:outputText value="Observação: " styleClass="myLabel" />
+							<p:inputTextarea cols="80" rows="6"
+								value="#{ordemServicoMB.ordemServico.observacao}">
+							</p:inputTextarea>
+						</div>
+					</p:tab>
+					<p:tab title="Produtos / Serviços">
+						<h:panelGrid>
+							<br />
+
+							<p:commandButton value="Adicionar item" style="width:170px"
+								oncomplete="PF('dados-loja').show()" styleClass="btn-amarelo"
+								action="#{ordemServicoMB.clearItemOrdemServico()}"
+								process="@this" update=":form-cadastro-loja:dados-loja"
+								icon="fa fa-plus">
+							</p:commandButton>
+
+
+							<br />
+
+							<p:dataTable id="tabela-itens" var="item"
+								value="#{ordemServicoMB.itemOrdemServicoList}"
+								emptyMessage="Nenhuma atividade foi adicionada">
+
+								<p:column headerText="Produto" styleClass="centralizado">
+									<h:outputText value="#{item.produto.nome}%">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Quantidade" styleClass="centralizado"
+									width="100">
+									<h:outputText value="#{item.quantidade}">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Vlr Unitário" styleClass="centralizado"
+									width="120">
+									<h:outputText value="#{item.valorUnitario}">
+										<f:convertNumber minFractionDigits="2" type="currency"
+											maxFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Opções" styleClass="centralizado"
+									width="130">
+									<p:menuButton value="Selecione">
+										<p:menuitem value="Editar" icon="fa fa-plus"
+											oncomplete="PF('dados-loja').show()"
+											update=":form-cadastro-loja:dados-loja" process="@this">
+											<div class="icones_editar"></div>
+											<f:setPropertyActionListener
+												target="#{ordemServicoMB.itemOrdemServico}" value="#{item}" />
+										</p:menuitem>
+										<p:menuitem value="Excluir" icon="fa fa-archive"
+											action="#{ordemServicoMB.removerItemOrdemServico()}"
+											update="tabela-itens" process="@this">
+											<div class="icones_excluir"></div>
+											<f:setPropertyActionListener
+												target="#{ordemServicoMB.itemOrdemServico}" value="#{item}"></f:setPropertyActionListener>
+										</p:menuitem>
+									</p:menuButton>
+								</p:column>
+
+							</p:dataTable>
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Dados da Receita">
+
+						<br />
+						<p:commandButton value="Adicionar Receita" style="width:170px"
+							styleClass="btn-amarelo"
+							action="#{ordemServicoMB.addReceitaOperacaoMetaLoja()}"
+							process="@this" update="panel-receitas" icon="fa fa-plus">
+						</p:commandButton>
+						<br />
+						<br />
+
+						<p:accordionPanel id="panel-receitas"
+							value="#{ordemServicoMB.receitaOrdemServicoList}" var="receita">
+							<p:tab title="#{receita.dataCadastroTitulo}">
+
+								<div class="ui-g-12 ui-md-6 ui-lg-6">
+									<h:outputText value="Médico/Optometrista: "
+										styleClass="myLabel" />
+									<h:outputText value=" * " styleClass="campoObrigatorio" />
+									<br />
+									<p:selectOneMenu id="med" autoWidth="true"
+										value="#{receita.medico}"
+										converterMessage="Não foi possível selecionar a medico(Erro ao converter o objeto)"
+										converter="genericConverter">
+										<f:selectItem itemLabel="Escolha uma opção"
+											noSelectionOption="true" />
+										<f:selectItems value="#{medicoMB.medicos}" var="m"
+											itemLabel="#{m.nome}" />
+									</p:selectOneMenu>
+								</div>
+
+								<div class="ui-g-12 ui-md-6 ui-lg-4">
+									<h:outputText value="Receita Válida até: " styleClass="myLabel" />
+									<h:outputText value=" * " styleClass="campoObrigatorio" />
+									<br />
+									<p:calendar value="#{receita.dataValidade}"
+										pattern="dd/MM/yyyy" />
+								</div>
+								<div class="ui-g-12 ui-md-6 ui-lg-12" />
+								<div class="card">
+									<p:panelGrid style="margin-top:20px; width: 100% !important">
+										<f:facet name="header">
+											<p:row>
+												<p:column colspan="9">Dados das medições</p:column>
+											</p:row>
+											<p:row>
+												<p:column colspan="2"></p:column>
+												<p:column colspan="1">Esférico</p:column>
+												<p:column colspan="1">Cilíndrico</p:column>
+												<p:column colspan="1">Eixo</p:column>
+												<p:column colspan="1">Altura</p:column>
+												<p:column colspan="1">DNP</p:column>
+											</p:row>
+
+										</f:facet>
+
+										<p:row>
+											<p:column rowspan="2" styleClass="Blue"
+												style="font-weight: bold;">LONGE</p:column>
+											<p:column style="font-weight: bold;"
+												styleClass="centralizado">
+												<h:panelGroup>
+													<span class="material-icons Blue"> visibility </span>
+													<p:outputLabel value="OD" styleClass="Blue" />
+												</h:panelGroup>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOdEsferico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOdCilindrico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOdEixo}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOdAltura}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOdDnp}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+
+										</p:row>
+
+										<p:row>
+											<p:column style="font-weight: bold;"
+												styleClass="centralizado">
+												<h:panelGroup>
+													<span class="material-icons Blue"> visibility </span>
+													<p:outputLabel value="OE" styleClass="Blue" />
+												</h:panelGroup>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOeEsferico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOeCilindrico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOeEixo}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOeAltura}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.longeOeDnp}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</div>
+								<div class="ui-g-12 ui-md-6 ui-lg-3">
+									<h:outputText value="Adição: " styleClass="myLabel" />
+									<br />
+									<p:inputText styleClass="moeda" maxlength="10"
+										value="#{receita.adicao}">
+										<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+											minFractionDigits="2" type="number" />
+											<p:ajax event="blur" update="painel-perto"/>
+									</p:inputText>
+								</div>
+								<div class="card">
+									<p:panelGrid id="painel-perto" style="margin-top:20px; width: 100% !important">
+										<f:facet name="header">
+											<p:row>
+												<p:column colspan="9">Dados das medições</p:column>
+											</p:row>
+											<p:row>
+												<p:column colspan="2"></p:column>
+												<p:column colspan="1">Esférico</p:column>
+												<p:column colspan="1">Cilíndrico</p:column>
+												<p:column colspan="1">Eixo</p:column>
+												<p:column colspan="1">Altura</p:column>
+												<p:column colspan="1">DNP</p:column>
+											</p:row>
+
+										</f:facet>
+
+										<p:row>
+											<p:column rowspan="2" styleClass="Red"
+												style="font-weight: bold;">PERTO</p:column>
+											<p:column style="font-weight: bold;"
+												styleClass="centralizado">
+												<h:panelGroup styleClass="centralizado">
+													<span class="material-icons Red"> visibility </span>
+													<p:outputLabel styleClass="Red" value="OD" />
+												</h:panelGroup>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOdEsferico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOdCilindrico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOdEixo}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOdAltura}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOdDnp}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+
+										</p:row>
+
+										<p:row>
+											<p:column style="font-weight: bold;"
+												styleClass="centralizado">
+												<h:panelGroup>
+													<span class="material-icons Red"> visibility </span>
+													<p:outputLabel styleClass="Red" value="OE" />
+												</h:panelGroup>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOeEsferico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOeCilindrico}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOeEixo}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOeAltura}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+											<p:column colspan="1">
+												<p:inputText styleClass="moeda" maxlength="10"
+													value="#{receita.pertoOeDnp}">
+													<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+														minFractionDigits="2" type="number" />
+												</p:inputText>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</div>
+								<div class="ui-g-12 ui-md-6 ui-lg-12">
+
+									<h:outputText value="Observação: " styleClass="myLabel" />
+									<p:inputTextarea cols="80" rows="6"
+										value="#{receita.observacao}">
+									</p:inputTextarea>
+								</div>
+
+								<div class="ui-g-12 ui-md-6 ui-lg-12">
+									<p:separator />
+								</div>
+
+								<div class="ui-g-12 ui-md-6 ui-lg-2">
+									<p:commandButton value="Excluir Receita" styleClass="btn-red"
+										icon="fa fa-refresh"
+										action="#{ordemServicoMB.removerReceitaOrdemServico()}"
+										update="panel-receitas">
+										<f:setPropertyActionListener
+											target="#{ordemServicoMB.receitaOrdemServico}"
+											value="#{receita}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+
+							</p:tab>
+						</p:accordionPanel>
+
+					</p:tab>
+					<p:tab title="Informações Adicionais">
+						<div jsf:id="panel-info" class="ui-fluid ui-g">
+							<div class="ui-g-12 ui-md-6 ui-lg-3">
+								<h:outputText value="Caixa / Gaveta: " styleClass="myLabel" />
+								<br />
+								<p:inputText value="#{ordemServicoMB.ordemServico.caixaGaveta}" />
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-3">
+								<h:outputText value="Laboratório: " styleClass="myLabel" />
+								<br />
+								<p:selectOneMenu autoWidth="true"
+									value="#{ordemServicoMB.ordemServico.laboratorio}"
+									converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+									converter="genericConverter">
+									<f:selectItem itemLabel="Selecione loja"
+										noSelectionOption="true" />
+								</p:selectOneMenu>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-3">
+								<h:outputText value="Local de Montagem: " styleClass="myLabel" />
+								<br />
+								<p:selectOneRadio autoWidth="true"
+									value="#{ordemServicoMB.ordemServico.localMontagem}">
+									<f:selectItem itemLabel="Loja" itemValue="LOJA" />
+									<f:selectItem itemLabel="Laboratório" itemValue="LABORATORIO" />
+								</p:selectOneRadio>
+							</div>
+
+							<div class="ui-g-12 ui-md-6 ui-lg-3">
+								<h:outputText value="Cliente Possui Receita: "
+									styleClass="myLabel" />
+								<br />
+								<p:selectOneRadio autoWidth="true"
+									value="#{ordemServicoMB.ordemServico.possuiReceita}">
+									<f:selectItem itemLabel="Sim" itemValue="true" />
+									<f:selectItem itemLabel="Não" itemValue="false" />
+								</p:selectOneRadio>
+							</div>
+
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:panel header="Lente">
+									<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+										<h:panelGroup>
+											<h:outputText value="Tipo: " styleClass="myLabel" />
+											<br />
+											<p:selectOneRadio autoWidth="true"
+												value="#{ordemServicoMB.ordemServico.tipoLente}">
+												<f:selectItem itemLabel="Pronta" itemValue="PRONTA" />
+												<f:selectItem itemLabel="Surfaçada" itemValue="SURFACADA" />
+											</p:selectOneRadio>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="Material: " styleClass="myLabel" />
+											<br />
+											<p:selectOneRadio autoWidth="true"
+												value="#{ordemServicoMB.ordemServico.materialLente}">
+												<f:selectItem itemLabel="Cristal" itemValue="CRISTAL" />
+												<f:selectItem itemLabel="Policabornato"
+													itemValue="POLICARBONATO" />
+												<f:selectItem itemLabel="Resina" itemValue="RESINA" />
+												<f:selectItem itemLabel="Trivex" itemValue="TRIVEX" />
+											</p:selectOneRadio>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="Descrição: " styleClass="myLabel" />
+											<br />
+											<p:inputText
+												value="#{ordemServicoMB.ordemServico.descricaoLente}" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="Coloração: " styleClass="myLabel" />
+											<br />
+											<p:inputText
+												value="#{ordemServicoMB.ordemServico.coloracaoLente}" />
+										</h:panelGroup>
+									</p:panelGrid>
+
+								</p:panel>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:panel header="Armação">
+									<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+										<h:panelGroup>
+											<h:outputText value="Armação propria: " styleClass="myLabel" />
+											<br />
+											<p:selectOneRadio autoWidth="true"
+												value="#{ordemServicoMB.ordemServico.armacaoPropria}">
+												<f:selectItem itemLabel="Sim" itemValue="true" />
+												<f:selectItem itemLabel="Não" itemValue="true" />
+											</p:selectOneRadio>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="Segue armação: " styleClass="myLabel" />
+											<br />
+											<p:selectOneRadio autoWidth="true"
+												value="#{ordemServicoMB.ordemServico.segueArmacao}">
+												<f:selectItem itemLabel="Sim" itemValue="true" />
+												<f:selectItem itemLabel="Não" itemValue="true" />
+											</p:selectOneRadio>
+										</h:panelGroup>
+									</p:panelGrid>
+								</p:panel>
+							</div>
+						</div>
+					</p:tab>
+					<p:tab title="Revisão Ordem de Serviço">
+
+						<br />
+						<br />
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+							<p:commandButton value="Salvar" icon="fa fa-floppy-o"
+								rendered="#{ordemServicoMB.ordemServico.id == null}"
+								styleClass="btn-blue" action="#{ordemServicoMB.save}"
+								update="@form" />
+							<p:commandButton value="Atualizar" icon="fa fa-floppy-o"
+								rendered="#{ordemServicoMB.ordemServico.id != null}"
+								styleClass="btn-green" action="#{ordemServicoMB.update}"
+								update="@form" />
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-3">
+							<p:commandButton styleClass="btn-orange" value="Cancelar"
+								rendered="#{ordemServicoMB.ordemServico.id == null}"
+								action="/private/dashboard/dashboard.xhtml" immediate="true"
+								icon="fa fa-ban" ajax="false" />
+
+							<p:commandButton styleClass="btn-orange" value="Cancelar"
+								rendered="#{ordemServicoMB.ordemServico.id != null}"
+								action="#{ordemServicoMB.goToList}" immediate="true"
+								icon="fa fa-ban" ajax="false" />
+						</div>
+					</p:tab>
+				</p:tabView>
+
+
+
+
+
+
+			</div>
+		</h:form>
+
+		<h:form id="form-cadastro-loja">
+			<p:dialog modal="true" id="dados-loja" widgetVar="dados-loja"
+				resizable="false" width="50%" height="350px">
+
+				<f:facet name="header">
+						#{ordemServicoMB.itemOrdemServico.valorUnitario == null ? 'Adicionar item' :
+						'Atualizar item'}
+						</f:facet>
+
+				<p:messages showDetail="true" autoUpdate="true" closable="true"
+					id="msg-adicionar-item-loja" />
+				<div class="card">
+					<div class="ui-fluid formgrid grid">
+						<div class="field col-6 md:col-2">
+							<p:outputLabel for="@next" value="Produto/Serviço" />
+							<p:autoComplete
+								value="#{ordemServicoMB.itemOrdemServico.produto}"
+								autocomplete="true" id="prod"
+								completeMethod="#{produtoMB.getProdutoAutoComplete}"
+								forceSelection="true" minQueryLength="1" maxResults="15"
+								dropdown="true" required="true"
+								requiredMessage="Produto/Serviço obrigatório"
+								converterMessage="Não foi possível selecionar a loja ao converter o objeto)"
+								converter="genericConverter" var="l" itemLabel="#{l.nome}"
+								itemValue="#{l}" placeholder="Pesquise pelo nome do produto">
+								<!-- 								<p:ajax event="itemSelect" -->
+								<!-- 									listener="#{autoCompleteView.onItemSelect}" update="msgs" /> -->
+							</p:autoComplete>
+						</div>
+						<div class="ui-lg-12" />
+						<div class="field col-6 md:col-2">
+							<p:outputLabel for="@next" value="Quantidade" />
+							<p:inputText required="true" id="qtd"
+								requiredMessage="Campo 'Quantidade' é obrigatório!"
+								maxlength="10"
+								value="#{ordemServicoMB.itemOrdemServico.quantidade}">
+								<p:keyFilter mask="num" />
+							</p:inputText>
+						</div>
+						<div class="ui-lg-12" />
+						<div class="field col-6 md:col-2">
+							<p:outputLabel for="@next" value="Valor Unitário" />
+							<p:inputText required="true" id="vlrUnitario"
+								requiredMessage="Campo 'Valor Unitário' é obrigatório!"
+								styleClass="moeda" maxlength="10"
+								value="#{ordemServicoMB.itemOrdemServico.valorUnitario}">
+								<f:convertNumber locale="pt_BR" maxFractionDigits="2"
+									minFractionDigits="2" type="number" />
+							</p:inputText>
+						</div>
+					</div>
+				</div>
+
+				<!-- 				<h:panelGrid id="grid-filds" > -->
+				<!-- 					<h:panelGroup> -->
+				<!-- 						<p:outputLabel value="Produto/Serviço:" styleClass="myLabel" -->
+				<!-- 							style="vertical-align: text-top;" /> -->
+				<!-- 						<h:outputText value=" * " styleClass="campoObrigatorio" /> -->
+				<!-- 						<br /> -->
+				<!-- 						<div style="margin-top: 6px" /> -->
+				<!-- 						<p:autoComplete value="#{ordemServicoMB.itemOrdemServico.produto}" -->
+				<!-- 							autocomplete="true" id="prod" -->
+				<!-- 							completeMethod="#{produtoMB.getProdutoAutoComplete}" -->
+				<!-- 							forceSelection="true" minQueryLength="1" maxResults="30" -->
+				<!-- 							dropdown="true" required="true" -->
+				<!-- 							requiredMessage="Produto/Serviço obrigatório" -->
+				<!-- 							converterMessage="Não foi possível selecionar a loja ao converter o objeto)" -->
+				<!-- 							converter="genericConverter" var="l" itemLabel="#{l.nome}" -->
+				<!-- 							itemValue="#{l}" placeholder="Pesquise pelo nome do produto"> -->
+				<!-- 						</p:autoComplete> -->
+				<!-- 					</h:panelGroup> -->
+
+				<!-- 					<h:panelGroup> -->
+				<!-- 						<p:outputLabel value="Quantidade:" styleClass="myLabel" -->
+				<!-- 							style="vertical-align: text-top;" /> -->
+				<!-- 						<h:outputText value=" * " styleClass="campoObrigatorio" /> -->
+				<!-- 						<br /> -->
+				<!-- 						<div style="margin-top: 6px" /> -->
+				<!-- 						<p:spinner required="true" -->
+				<!-- 							requiredMessage="Campo 'Quantidade' é obrigatório!" -->
+				<!-- 							value="#{ordemServicoMB.itemOrdemServico.quantidade}" /> -->
+				<!-- 					</h:panelGroup> -->
+
+				<!-- 					<h:panelGroup> -->
+				<!-- 						<p:outputLabel value="Valor Unitário (R$):" styleClass="myLabel" -->
+				<!-- 							style="vertical-align: text-top;" /> -->
+				<!-- 						<h:outputText value=" * " styleClass="campoObrigatorio" /> -->
+				<!-- 						<br /> -->
+				<!-- 						<div style="margin-top: 6px" /> -->
+				<!-- 						<p:inputText required="true" id="vlrUnitario" -->
+				<!-- 							requiredMessage="Campo 'Valor Unitário' é obrigatório!" -->
+				<!-- 							styleClass="moeda" maxlength="10" -->
+				<!-- 							value="#{ordemServicoMB.itemOrdemServico.valorUnitario}"> -->
+				<!-- 							<f:convertNumber locale="pt_BR" maxFractionDigits="2" -->
+				<!-- 								minFractionDigits="2" type="number" /> -->
+				<!-- 						</p:inputText> -->
+				<!-- 					</h:panelGroup> -->
+				<!-- 				</h:panelGrid> -->
+
+				<p:separator />
+				<h:panelGroup
+					rendered="#{ordemServicoMB.itemOrdemServico.valorUnitario == null}">
+					<p:commandButton value="Adicionar" styleClass="btn-blue"
+						update=":Formulario:tabela-itens prod qtd vlrUnitario msg-adicionar-item-loja"
+						action="#{ordemServicoMB.addItemOperacaoMetaLoja()}"
+						icon="fa fa-plus" />
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{not empty ordemServicoMB.itemOrdemServico.valorUnitario}">
+					<p:commandButton value="Atualizar" styleClass="btn-green"
+						oncomplete="PF('dados-loja').hide()" icon="fa fa-refresh"
+						update=":Formulario:tabela-itens"
+						action="#{ordemServicoMB.updateItemOperacaoMetaLoja()}" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:commandButton value="Cancelar" styleClass="btn-red"
+						icon="fa fa-close" process="@this"
+						oncomplete="PF('dados-loja').hide()" immediate="true" />
+				</h:panelGroup>
+
+				<p:spacer width="10" height="0" />
+
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

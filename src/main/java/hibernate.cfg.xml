@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/oticaver?serverTimezone=UTC</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+<!-- 		<property name="javax.persistence.validation.mode">none</property> -->
+
+
+		<mapping class="model.Usuario" />
+		<mapping class="model.Loja" />
+		<mapping class="model.Funcao" />
+		<mapping class="model.Colaborador" />
+		<mapping class="model.GrupoProduto" />
+		<mapping class="model.Grife" />
+		<mapping class="model.Profissao" />
+		<mapping class="model.Unidade" />
+		<mapping class="model.Medico" />
+		<mapping class="model.OrigemCliente" />
+		<mapping class="model.ResponsavelTecnico" />
+		<mapping class="model.Cliente" />
+		<mapping class="model.Produto" />
+		<mapping class="model.Fornecedor" />
+		<mapping class="model.OrdemServico" />
+		<mapping class="model.ItemOrdemServico" />
+		<mapping class="model.ReceitaOrdemServico" />
+
+	</session-factory>
+</hibernate-configuration>

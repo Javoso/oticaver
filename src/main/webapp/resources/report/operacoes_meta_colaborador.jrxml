@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="operacoes_meta_colaborador" language="groovy" pageWidth="399" pageHeight="85" columnWidth="399" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cfc4e1de-780b-4a61-897c-770adf6ab9ce">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="metaInicial" class="java.math.BigDecimal"/>
+	<field name="metaFinal" class="java.math.BigDecimal"/>
+	<field name="percentualComissao" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="133" y="20" width="133" height="29" backcolor="#F2F2F2" uuid="4beebf68-2209-4dc1-a2b6-3fbed54f2e49"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Faixa Final (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="266" y="20" width="133" height="29" backcolor="#F2F2F2" uuid="56df9afa-fbcf-4e76-b6cd-7f05e309c5a7"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comissão (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="20" width="133" height="29" backcolor="#F2F2F2" uuid="e1941022-3ba2-440b-b514-186c09a2d668"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Faixa Inicio (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="399" height="20" uuid="d3f38b45-cf6f-44cb-a1df-31c06a657a2a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Colaborador - Faixas de comissões]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField pattern="#,##0 %" isBlankWhenNull="true">
+				<reportElement x="133" y="0" width="133" height="33" uuid="c70856c0-9e55-47a6-898f-ddf09d68f42f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{metaFinal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 %" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="133" height="33" uuid="2bd36582-6626-416c-8369-f89da99e9f32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{metaInicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 %" isBlankWhenNull="true">
+				<reportElement x="266" y="0" width="133" height="33" uuid="c8309e1d-10be-4daa-9b2b-85ccf05bf989"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{percentualComissao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

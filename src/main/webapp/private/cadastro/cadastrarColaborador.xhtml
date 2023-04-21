@@ -1,0 +1,195 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{colaboradorMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as colaboradores cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{colaboradorMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as colaboradores cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Cadastrar colaborador</ui:define>
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="colaborador1.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Cadastrar Colaborador"
+			rendered="#{colaboradorMB.colaborador.id == null}" />
+		<h:outputText value="Atualizar Colaborador"
+			rendered="#{colaboradorMB.colaborador.id != null}" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Informe campos obrigatórios para cadastrar o colaborador"
+			rendered="#{colaboradorMB.colaborador.id == null}" />
+		<h:outputText
+			value="Informe campos obrigatórios para atualizar o colaborador."
+			rendered="#{colaboradorMB.colaborador.id != null}" />
+	</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="Formulario">
+			<p:messages autoUpdate="true" closable="true" />
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<p:panel header="Dados pessoais">
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="Loja: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+
+						<p:selectOneMenu id="loja" autoWidth="false"
+							value="#{colaboradorMB.colaborador.loja}"
+							converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+							converter="genericConverter">
+							<f:selectItem itemLabel="Selecione loja" noSelectionOption="true" />
+							<f:selectItems value="#{lojaMB.lojas}" var="loja"
+								itemLabel="#{loja.nome}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-8">
+						<h:outputText value="Nome: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<p:inputText required="true"
+							requiredMessage="Campo 'Nome' é obrigatório!"
+							value="#{colaboradorMB.colaborador.nome}">
+						</p:inputText>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="E-mail: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<p:inputText required="true"
+							requiredMessage="Campo 'Email' é obrigatório!"
+							value="#{colaboradorMB.colaborador.email}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="RG: " styleClass="myLabel" />
+						<p:inputText 
+							value="#{colaboradorMB.colaborador.rg}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="CPF: " styleClass="myLabel" />
+						<p:inputMask mask="999.999.999-99"
+							value="#{colaboradorMB.colaborador.cpf}">
+						</p:inputMask>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="Telefone fixo: " styleClass="myLabel" />
+						<p:inputText value="#{colaboradorMB.colaborador.telefoneFixo}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="Telefone móvel: " styleClass="myLabel" />
+						<p:inputText value="#{colaboradorMB.colaborador.telefoneMovel}">
+						</p:inputText>
+					</div>
+				</p:panel>
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<p:panel header="Endereço">
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="CEP: " styleClass="myLabel" />
+						<p:inputMask mask="99999-999"
+							value="#{colaboradorMB.colaborador.cep}">
+						</p:inputMask>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-8">
+						<h:outputText value="Endereço: " styleClass="myLabel" />
+						<p:inputText value="#{colaboradorMB.colaborador.endereco}" />
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="Bairro: " styleClass="myLabel" />
+						<p:inputText value="#{colaboradorMB.colaborador.bairro}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="Cidade: " styleClass="myLabel" />
+						<p:inputText value="#{colaboradorMB.colaborador.cidade}">
+						</p:inputText>
+					</div>
+				</p:panel>
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<div class="ui-g-12 ui-md-6 ui-lg-12">
+
+					<h:outputText value="Observação: " styleClass="myLabel" />
+					<p:inputTextarea cols="80" rows="6" value="#{colaboradorMB.colaborador.observacao}">
+					</p:inputTextarea>
+				</div>
+
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<h:panelGroup rendered="#{colaboradorMB.colaborador.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Salvar" icon="fa fa-floppy-o"
+							styleClass="btn btn-primary" action="#{colaboradorMB.save}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{colaboradorMB.colaborador.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Atualizar" icon="fa fa-floppy-o"
+							styleClass="btn-green" action="#{colaboradorMB.update}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{colaboradorMB.colaborador.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="/private/dashboard/dashboard.xhtml" immediate="true"
+							icon="fa fa-ban" ajax="false" />
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{colaboradorMB.colaborador.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="#{colaboradorMB.goToList}" immediate="true"
+							icon="fa fa-ban" ajax="false" />
+					</div>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

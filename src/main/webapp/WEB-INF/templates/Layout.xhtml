@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="titulo-pagina" /> | OTICA VER</title>
+	
+	<meta name="viewport" content="width=device-width" />
+	
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/dist/css/skins/skin-unicatolica.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+	<link rel="stylesheet"
+		href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+	<h:outputStylesheet library="styles" name="layout-aux.css" />
+	<h:outputStylesheet library="styles" name="ripple-effect.css" />
+	<h:outputStylesheet library="styles" name="estilo.css" />
+	<h:outputStylesheet library="styles" name="dashboard.css" />
+	<h:outputStylesheet library="styles" name="responsive-tables.css" />
+	<h:outputStylesheet library="iconfont" name="material-icons.css" />
+
+	<h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+
+	<h:outputScript target="body" library="bootstrap/js" name="bootstrap.min.js" />
+	
+	<!-- Correio -->
+	
+	<h:outputScript target="body" library="dist/js" name="app.min.js" />
+
+	<h:outputScript target="body" library="js" name="app.js" />
+
+	<h:outputScript target="body" library="js" name="menu.js" />
+
+	<h:outputScript target="body" library="js" name="jquery.maskMoney.js" />
+
+	<h:outputScript target="body" library="js" name="myFunctions.js" />
+
+	<h:outputScript target="body" library="js" name="locale.js" />
+
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{facesContext.externalContext.requestContextPath}/resources/img/Logo.ico" />
+
+</h:head>
+
+<h:body class="hold-transition skin-unicatolica sidebar-mini">
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+		
+	<p:ajaxStatus oncomplete="configurarMoeda()" />
+	
+	<p:dialog header="Carregando..." widgetVar="statusDialog" modal="true"
+		draggable="false" closable="false" resizable="false" showHeader="true">
+		<p:graphicImage library="img" name="ajaxloadingbar.gif" />
+	</p:dialog>
+ 
+	<div class="wrapper fixed">
+		<!-- Main Header -->
+		<header class="main-header">
+			<ui:include src="Cabecalho.xhtml" />
+		</header>
+		<aside class="main-sidebar">
+			<ui:include src="Menu.xhtml" />
+		</aside>
+		<div class="content-wrapper">
+			<section class="content-header" style="padding-bottom: 20px;">
+				<ui:insert name="content">
+					<div class="card-sistemas shadow-effect hei-auto-on-mobile">
+						<div class="panel-titulo">
+
+							<div class="panel-titulo-links">
+								<ui:insert name="links" />
+							</div>
+
+							<ui:insert name="imagem">
+								<h:graphicImage library="img" name="avatar04.png" />
+							</ui:insert>
+
+							<h1>
+								<ui:insert name="titulo">Título</ui:insert>
+							</h1>
+
+							<h2>
+								<ui:insert name="subtitulo">Sub Título</ui:insert>
+							</h2>
+
+							<div class="links-xs">
+								<ui:insert name="links-xs"></ui:insert>
+							</div>
+
+						</div>
+
+						<div class="content" style="min-height: 485px;">
+							<ui:insert name="conteudo">
+
+							</ui:insert>
+						</div>
+					</div>
+				</ui:insert>
+			</section>
+		</div>
+		<footer class="main-footer">
+			<ui:include src="Rodape.xhtml" />
+		</footer>
+	</div>
+
+	<script>
+		function configurarMoeda(){
+			$(".moeda").maskMoney({
+				 decimal: ",", thousands: ".", allowZero: true
+			});
+		}
+
+		$(document).ready(function(){
+			configurarMoeda();
+		});
+	</script>
+
+	<!-- Tradução Calendário Primeface -->
+	<script>
+		PrimeFaces.locales['pt_BR'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Selecione a Hora',
+			timeText : 'Hora',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
+		};
+	</script>
+</h:body>
+</html>

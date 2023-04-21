@@ -1,0 +1,69 @@
+package model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
+@Entity
+@Table(name="responsavel_tecnico")
+public class ResponsavelTecnico extends EntidadeGenerica  implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3438150222836033248L;
+
+	@Column(name = "status")
+	@Type(type = "true_false")
+	private Boolean status = true;
+
+	@Column(name = "nome")
+	private String nome;
+	
+	@Column(name = "observacao", columnDefinition = "text")
+	private String observacao;
+	
+	@ManyToOne
+	private Loja loja;
+	
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public String getNome() {
+		if(nome == null) {
+			nome = "";
+		}
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	
+	public Loja getLoja() {
+		return loja;
+	}
+	
+	public void setLoja(Loja loja) {
+		this.loja = loja;
+	}
+
+}

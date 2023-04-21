@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ordem-producao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9b3a11e-5ec3-47ed-8d65-4b3d2455b6b2">
+	<property name="ireport.zoom" value="1.2418426461183154"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="filtro" class="java.lang.String"/>
+	<parameter name="rodape" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="item-divisao-meta-loja" class="java.util.List"/>
+	<field name="loja.nome" class="java.lang.String"/>
+	<field name="loja.cnpj" class="java.lang.String"/>
+	<field name="competencia" class="java.lang.String"/>
+	<field name="colaboradorGerente.nome" class="java.lang.String"/>
+	<field name="metaLoja" class="java.math.BigDecimal"/>
+	<field name="observacao" class="java.lang.String"/>
+	<field name="colaboradorGerente.cargo" class="java.lang.String"/>
+	<field name="loja.cidade.nome" class="java.lang.String"/>
+	<field name="loja.operacao.nome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="156" splitType="Stretch">
+			<rectangle>
+				<reportElement x="107" y="26" width="448" height="73" uuid="cfdedf31-07cc-4751-9f14-352df380bb5e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="26" width="107" height="73" uuid="e7eea54a-f370-4835-8973-33e4a3248998"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="110" width="554" height="33" uuid="c27e944f-9c1f-4afe-86ff-fb8cd203d5e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Controle de Metas]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="145" width="554" height="1" uuid="6a9cb2ff-bc5d-4640-baa2-abeff635a966"/>
+			</line>
+			<staticText>
+				<reportElement x="278" y="76" width="39" height="21" uuid="c2d61d7e-1113-4532-ace1-5a546194b988"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNPJ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="26" backcolor="#CCCCCC" uuid="e4a65c5c-eb72-446c-9c9e-3bdb30c72e0d"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GIP - Gestão Integrada de Pessoas]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="7" y="35" width="92" height="56" uuid="2b99be02-44c0-4185-ba16-b817b2b0a23c"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="108" y="31" width="86" height="21" uuid="dcc258c6-f4ee-4b6b-b6fe-488738aa7af6"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPETÊNCIA:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="148" y="53" width="239" height="23" isPrintWhenDetailOverflows="true" uuid="81a91fb3-f30e-4f1a-828c-e4f11cfb0c42"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{loja.nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="315" y="76" width="134" height="21" isPrintWhenDetailOverflows="true" uuid="f59eb3a8-b3dd-4385-9137-e6d7e6aa260b"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{loja.cnpj}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="194" y="31" width="83" height="21" isPrintWhenDetailOverflows="true" uuid="877bfd20-d0de-4d19-92b5-1a5fede37426"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="108" y="76" width="52" height="21" uuid="e857b719-6fca-4ee7-8ab4-6257cf4ff0f1"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIDADE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="160" y="76" width="117" height="21" isPrintWhenDetailOverflows="true" uuid="979088bb-0582-4533-980a-d2d4eb02f14c"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{loja.cidade.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="31" width="69" height="21" uuid="099c4113-58da-47b3-b0c4-2dae507405d3"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERAÇÃO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="347" y="31" width="113" height="21" isPrintWhenDetailOverflows="true" uuid="0d62100f-f9e7-42b6-ae58-ee0ff85afb6c"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{loja.operacao.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="108" y="53" width="39" height="23" uuid="637b6802-aad2-4c07-b7e2-0df9d132d4a3"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOJA:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="147" height="23" backcolor="#F2F2F2" uuid="640d9bed-111c-4163-80ec-644b86d5202c"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="408" y="1" width="147" height="23" backcolor="#F2F2F2" uuid="88f352bb-4710-41ab-877c-2d408989fdaa"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meta/Loja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="147" y="1" width="261" height="23" backcolor="#F2F2F2" uuid="064ff2f9-8a52-404c-a060-401249701b43"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerente]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="147" height="19" isPrintWhenDetailOverflows="true" uuid="0c663e4b-8245-4e18-9fc2-e7dd32dc18c8"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{colaboradorGerente.cargo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="408" y="0" width="147" height="19" isPrintWhenDetailOverflows="true" uuid="1d20a202-9345-44ff-a718-2c1d6eb497d0"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{metaLoja}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="147" y="0" width="261" height="19" isPrintWhenDetailOverflows="true" uuid="fa8ac428-5d87-4eaa-aeeb-395d9b0bbaba"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{colaboradorGerente.nome}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="65">
+			<staticText>
+				<reportElement x="0" y="3" width="100" height="20" uuid="a35f54a7-417c-4073-ade4-75d2662e3b2a"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="1" y="24" width="554" height="37" isPrintWhenDetailOverflows="true" uuid="0d0444a0-b410-4da5-a152-a37bc968c775"/>
+				<box topPadding="1" leftPadding="3" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="75">
+			<subreport>
+				<reportElement x="1" y="0" width="554" height="75" uuid="430ad450-5135-4d92-83a6-a2941936a288"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{item-divisao-meta-loja})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "item-divisao-meta-loja.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

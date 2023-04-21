@@ -1,0 +1,161 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{profissaoMB.prepareSave()}" immediate="true"
+				title="Clique neste botão para cadastrar uma nova profissao."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Cadastrar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{profissaoMB.prepareSave()}" immediate="true"
+				title="Clique neste botão para cadastrar uma nova profissao."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Cadastrar
+			</p:commandLink>
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Profissões</ui:define>
+
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="cargos.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Listagem de Profissões" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText value="Lista de profissaos cadastradas no sistema." />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formulario" prependId="false">
+			<p:messages autoUpdate="true" closable="true" />
+
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<div class="ui-g-12 ui-md-4 ui-lg-4">
+					<h:outputText value="Nome: " styleClass="myLabel" />
+					<p:inputText value="#{profissaoMB.profissaoFilter.nome}" />
+				</div>
+
+				<div class="ui-g-12 ui-md-4 ui-lg-2" style="margin-top: 18px">
+					<p:commandButton value="Buscar" icon="fa fa-search"
+						styleClass="btn btn-primary" action="#{profissaoMB.list()}"
+						update=":formulario:tabelaCarteira" />
+				</div>
+
+				<div class="ui-g-12 ui-md-4 ui-lg-2" style="margin-top: 18px">
+					<p:commandButton id="report" actionListener="#{profissaoMB.gerarPDF}"
+						icon="fa fa-print" styleClass="btn btn-success" value="Gerar PDF"
+						onclick="this.form.target='_blank'" ajax="false">
+					</p:commandButton>
+				</div>
+			</div>
+			<br />
+
+			<p:dataTable id="tabelaCarteira" value="#{profissaoMB.lazy}" lazy="true"
+				var="entity" paginator="true" rows="20" reflow="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" rowIndexVar="row"
+				emptyMessage="Nenhum registro encontrado." filterEvent="enter"
+				widgetVar="dadosTabela" paginatorAlwaysVisible="false">
+
+				<p:column headerText="Status" width="80" styleClass="centralizado">
+					<p:commandLink action="#{profissaoMB.updateStatus}"
+						update="tabelaCarteira">
+						<h:outputLabel rendered="#{entity.status}">
+							<i class="material-icons Green">check_circle</i>
+						</h:outputLabel>
+
+						<h:outputLabel rendered="#{entity.status == false}">
+							<i class="material-icons Red">remove_circle</i>
+						</h:outputLabel>
+
+						<f:setPropertyActionListener target="#{profissaoMB.profissao}"
+							value="#{entity}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column id="nome" headerText="Nome" width="350">
+					<h:outputText value="#{entity.nome}" />
+				</p:column>
+
+				<p:column headerText="Observação">
+					<h:outputText value="#{entity.observacao}" />
+				</p:column>
+
+				<p:column headerText="Editar" width="55" styleClass="centralizado">
+					<p:link id="lnkEditar" outcome="#{profissaoMB.prepareUpdate()}"
+						title="Editar" rendered="#{entity.status}">
+						<i class="material-icons GrayDark">border_color</i>
+						<f:param name="id" value="#{entity.id}" />
+					</p:link>
+					<p:outputLabel rendered="#{!entity.status}"
+						title="Editar desabilitado">
+						<i class="material-icons GrayDark">border_color</i>
+					</p:outputLabel>
+				</p:column>
+			</p:dataTable>
+
+			<br />
+
+			<p:panel styleClass="panel-buttons">
+				<h:panelGrid columns="10">
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Green">check_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Profissõe ativa" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Red">remove_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Profissõe inativa" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons GrayDark">border_color</i>
+							<p:spacer width="5"></p:spacer>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Editar dados da Profissõe cadastrada." />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

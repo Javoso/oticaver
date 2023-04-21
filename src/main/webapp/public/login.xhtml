@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Otica Ver</title>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/dist/css/skins/skin-unicatolica.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+	<link rel="stylesheet"
+		href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{facesContext.externalContext.requestContextPath}/resources/img/logo.ico" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+	<h:outputStylesheet library="styles" name="layout-aux.css" />
+	<h:outputStylesheet library="styles" name="ripple-effect.css" />
+	<h:outputStylesheet library="styles" name="estilo.css" />
+	<h:outputStylesheet library="styles" name="login.css" />
+	<h:outputStylesheet library="styles" name="dashboard.css" />
+	<!-- 	<h:outputStylesheet library="styles" name="animate.css" /> -->
+	<h:outputStylesheet library="iconfont" name="material-icons.css" />
+
+	<h:outputScript target="body" library="primefaces"
+		name="jquery/jquery.js" />
+
+	<h:outputScript target="body" library="bootstrap/js"
+		name="bootstrap.min.js" />
+	<!-- Correio -->
+	<h:outputScript target="body" library="dist/js" name="app.min.js" />
+	<h:outputScript target="body" library="js" name="app.js"></h:outputScript>
+	<script>
+		
+	</script>
+
+</h:head>
+
+<h:body style="width:100% ;height: 100%;">
+
+	<header class="main-header-login">
+		<!-- <div class="nav-bar"></div> -->
+	</header>
+	<div class="main-login animate__animated animate__backInDown">
+		<div class="logo">
+			<p:graphicImage library="img" name="logo-otica-ver.png"
+				styleClass="img-responsive" />
+		</div>
+
+		<div class="titulo">
+			<!-- 			<h3>Sistema de Controle - Otica Ver</h3> -->
+		</div>
+		<div class="descricao">Informe seu login e senha para acessar o
+			sistema</div>
+		<div class="conteudo">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="login">
+						<div class="titulo-login">
+							<h1 >LOGIN</h1>
+						</div>
+						<div class="card-form">
+							<h:form id="formLogin" prependId="false">
+								<p:messages id="msg" autoUpdate="true" closable="true"
+									styleClass="mensagem-xs" />
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon has-success"><i
+											class="material-icons">account_circle</i></span>
+										<p:inputText id="j_username" value="#{loginBean.user}"
+											placeholder="Seu Login" styleClass="form-control txt"
+											required="true" requiredMessage="Campo 'Login' obrigatório" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="material-icons">https</i></span>
+										<p:password id="j_password" value="#{loginBean.pass}"
+											required="true" placeholder="Sua senha"
+											requiredMessage="Campo Senha obrigatório"
+											styleClass="form-control txt" />
+									</div>
+								</div>
+								<p:commandButton value="ACESSAR" icon="fa fa-arrow-right"
+									style="width: 100%;margin-top:5px;" update="msg"
+									action="#{loginBean.login()}" styleClass="btn btn-acessar"
+									ajax="false" />
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

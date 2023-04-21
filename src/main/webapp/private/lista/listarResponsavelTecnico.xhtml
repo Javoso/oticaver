@@ -1,0 +1,183 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{responsavelTecnicoMB.prepareSave()}"
+				immediate="true"
+				title="Clique neste botão para cadastrar um novo responsavelTecnico."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Cadastrar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{responsavelTecnicoMB.prepareSave()}"
+				immediate="true"
+				title="Clique neste botão para cadastrar um novo responsavelTecnico."
+				styleClass="btn btn-orange">
+				<div class="fa fa-plus-circle icon-link" />
+				Cadastrar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Responsavel Tecnico</ui:define>
+
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="resp-tecnico.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Listagem de Responsávies Técnicos" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText value="Lista de responsaveis técnicos cadastrados no sistema." />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formulario" prependId="false">
+			<p:messages autoUpdate="true" closable="true" />
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<h:panelGroup>
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<h:outputText value="Loja: " styleClass="myLabel" />
+						<br />
+						<p:selectOneMenu id="loja" autoWidth="false"
+							value="#{responsavelTecnicoMB.responsavelTecnicoFilter.loja}"
+							converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+							converter="genericConverter">
+							<f:selectItem itemLabel="Selecione loja" noSelectionOption="true" />
+							<f:selectItems value="#{lojaMB.lojas}" var="loja"
+								itemLabel="#{loja.nome}" />
+						</p:selectOneMenu>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup>
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<h:outputText value="Responsável Técnico:  " styleClass="myLabel" />
+						<br />
+						<p:inputText value="#{responsavelTecnicoMB.responsavelTecnicoFilter.nome}" />
+					</div>
+				</h:panelGroup>
+
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<p:commandButton value="Buscar" icon="fa fa-search"
+						style="margin-top:18px;" styleClass="btn btn-primary"
+						action="#{responsavelTecnicoMB.list()}"
+						update=":formulario:tabelaResponsavelTecnico" />
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<p:commandButton id="report" style="margin-top:18px;"
+						actionListener="#{responsavelTecnicoMB.gerarPDF}" icon="fa fa-print"
+						styleClass="btn btn-success" value="Gerar PDF"
+						onclick="this.form.target='_blank'" ajax="false">
+					</p:commandButton>
+				</div>
+			</div>
+
+			<br />
+
+			<p:dataTable id="tabelaResponsavelTecnico"
+				value="#{responsavelTecnicoMB.responsavelTecnicos}" lazy="true" var="entity"
+				paginator="true" rows="20" reflow="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{currentPage} de {totalPages}"
+				paginatorPosition="bottom" rowIndexVar="row"
+				emptyMessage="Nenhum registro encontrado." filterEvent="enter"
+				widgetVar="dadosTabela" paginatorAlwaysVisible="false">
+
+				<p:column headerText="Status" width="70" styleClass="centralizado">
+					<p:commandLink action="#{responsavelTecnicoMB.updateStatus}"
+						update="tabelaResponsavelTecnico">
+
+						<h:outputLabel rendered="#{entity.status}">
+							<i class="material-icons Green">check_circle</i>
+						</h:outputLabel>
+
+						<h:outputLabel rendered="#{entity.status == false}">
+							<i class="material-icons Red">remove_circle</i>
+						</h:outputLabel>
+
+						<f:setPropertyActionListener target="#{responsavelTecnicoMB.responsavelTecnico}"
+							value="#{entity}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="Loja" width="180">
+					<h:outputText value="#{entity.loja.nome}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{entity.nome}" />
+				</p:column>
+
+				<p:column headerText="Editar" width="70" styleClass="centralizado">
+					<p:link id="lnkEditar" outcome="#{responsavelTecnicoMB.prepareUpdate()}"
+						title="Editar" rendered="#{entity.status}">
+						<i class="material-icons GrayDark">border_color</i>
+						<f:param name="id" value="#{entity.id}" />
+					</p:link>
+					<p:outputLabel rendered="#{!entity.status}"
+						title="Editar desabilitado">
+						<i class="material-icons GrayDark">border_color</i>
+					</p:outputLabel>
+				</p:column>
+			</p:dataTable>
+
+			<br />
+
+			<p:panel styleClass="panel-buttons">
+				<h:panelGrid columns="10">
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Green">check_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Responsável Técnico ativo" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons Red">remove_circle</i>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Responsável Técnico inativo" />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:graphicImage>
+							<i class="material-icons GrayDark">border_color</i>
+							<p:spacer width="5"></p:spacer>
+						</p:graphicImage>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:outputLabel value="Editar dados." />
+						<p:spacer width="5"></p:spacer>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

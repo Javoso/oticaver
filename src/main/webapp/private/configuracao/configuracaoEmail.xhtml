@@ -1,0 +1,332 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- 	<ui:define name="links"> -->
+	<!-- 		<h:form> -->
+	<!-- 			<p:commandLink styleClass="btn btn-orange"> -->
+	<!-- 				<div class="fa fa-plus-circle icon-link" /> -->
+	<!-- 				Cadastrar -->
+	<!-- 			</p:commandLink> -->
+	<!-- 		</h:form> -->
+	<!-- 	</ui:define> -->
+
+	<!-- 	<ui:define name="links-xs"> -->
+	<!-- 		<h:form> -->
+	<!-- 			<p:commandLink styleClass="btn btn-orange"> -->
+	<!-- 				<div class="fa fa-plus-circle icon-link" /> -->
+	<!-- 				Cadastrar -->
+	<!-- 			</p:commandLink> -->
+	<!-- 		</h:form> -->
+	<!-- 	</ui:define> -->
+
+	<ui:define name="titulo-pagina">Parâmetros de E-mail</ui:define>
+
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="email.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Parâmetros de E-mail"
+			rendered="#{configuracaoEmailMB.configuracaoEmail.id == null}" />
+		<h:outputText value="Parâmetros de E-mail"
+			rendered="#{configuracaoEmailMB.configuracaoEmail.id != null}" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Preencha os campos para cadastrar uma nova operação."
+			rendered="#{configuracaoEmailMB.configuracaoEmail.id == null}" />
+		<h:outputText value="Preencha os campos para atualizar a operação."
+			rendered="#{configuracaoEmailMB.configuracaoEmail.id != null}" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p:panel style="margin-top: 15px" styleClass="my-panel">
+			<p:outputLabel value="(" />
+			<p:outputLabel value="*" styleClass="campoObrigatorio" />
+			<p:outputLabel value=") Campos obrigatórios." />
+		</p:panel>
+
+		<h:form id="frm">
+			<div class="ui-fluid">
+
+				<p:messages id="msg" showDetail="true" autoUpdate="true"
+					closable="true" />
+
+				<br />
+				<p:panel header="Lista de E-mail por categoria"
+					style="height: 100% !importante" toggleable="true">
+					<h:panelGrid>
+						<br />
+						<p:commandButton value="Adicionar E-mail" style="width: 170px"
+							oncomplete="PF('dados-email').show()" styleClass="btn-amarelo"
+							action="#{configuracaoEmailMB.clearItemEmailConfiguracao()}"
+							process="@this" update=":form-cadastro-email:dados-email"
+							icon="fa fa-plus">
+						</p:commandButton>
+						<br />
+
+						<p:dataTable id="tabela-email" var="item" reflow="true"
+							value="#{configuracaoEmailMB.itemEmailConfiguracaoList}"
+							emptyMessage="Nenhuma atividade foi adicionada">
+
+							<p:column headerText="Tipo" styleClass="centralizado">
+								<h:outputText value="#{item.perfil.descricao}">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="E-mail" styleClass="centralizado">
+								<h:outputText value="#{item.email}">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Opções" styleClass="centralizado"
+								width="120">
+								<p:menuButton value="Selecione">
+									<p:menuitem value="Editar" icon="fa fa-plus"
+										oncomplete="PF('dados-colaborador').show()"
+										update=":form-cadastro-email:dados-email" process="@this">
+										<div class="icones_editar"></div>
+										<f:setPropertyActionListener
+											target="#{configuracaoEmailMB.itemEmailConfiguracao}"
+											value="#{item}" />
+									</p:menuitem>
+									<p:menuitem value="Excluir" icon="fa fa-archive"
+										action="#{con}" update="tabela-email" process="@this">
+										<div class="icones_excluir"></div>
+										<f:setPropertyActionListener
+											target="#{configuracaoEmailMB.itemEmailConfiguracao}"
+											value="#{item}"></f:setPropertyActionListener>
+									</p:menuitem>
+								</p:menuButton>
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+				<p:panel>
+
+					<div class="ui-fluid">
+						<p:messages autoUpdate="true" closable="true" />
+
+						<div class="marginTop10" />
+
+						<h:panelGroup layout="block" id="confEmail"
+							styleClass="panel panel-default">
+							<div class="panel-heading">Configurações de E-mail</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<p:outputLabel value="Host Name:" styleClass="myLabel"
+												for="hostname" />
+											<p:inputText id="hostname"
+												value="#{configuracaoEmailMB.configuracaoEmail.hostname}"
+												required="true" placeholder="Ex.: smtp.gmail.com"
+												requiredMessage="Campo 'Host Name' é obrigatório."
+												styleClass="form-control" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<p:outputLabel value="Porta:" styleClass="myLabel" for="port" />
+
+											<p:inputText id="port"
+												value="#{configuracaoEmailMB.configuracaoEmail.port}"
+												required="true" maxlength="6" placeholder="Ex.: 587"
+												requiredMessage="Campo 'Porta' é obrigatório."
+												styleClass="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<p:outputLabel value="Usa SSL?:" styleClass="myLabel" />
+											<h:outputText value=" * " styleClass="campoObrigatorio" />
+
+											<p:selectOneRadio required="true"
+												value="#{configuracaoEmailMB.configuracaoEmail.ssl}"
+												requiredMessage="Campo 'SSL' é obrigatório!">
+												<f:selectItem itemLabel="Sim" itemValue="true" />
+												<f:selectItem itemLabel="Não" itemValue="false" />
+											</p:selectOneRadio>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<p:outputLabel value="E-mail de envio:" styleClass="myLabel"
+												for="email" />
+
+											<p:inputText
+												value="#{configuracaoEmailMB.configuracaoEmail.username}"
+												required="true"
+												requiredMessage="Campo 'E-mail de envio' é obrigatório!"
+												styleClass="form-control" id="email" />
+
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<h:panelGroup rendered="#{configuracaoEmailMB.cadastrada}">
+												<h:outputText value="Deseja atualizar a senha?"
+													styleClass="myLabel" />
+											</h:panelGroup>
+
+											<p:selectOneRadio id="rad"
+												rendered="#{configuracaoEmailMB.cadastrada}"
+												value="#{configuracaoEmailMB.mudarSenha}">
+
+												<f:selectItem itemLabel="Sim" itemValue="true" />
+												<f:selectItem itemLabel="Não" itemValue="false" />
+
+												<p:ajax process="rad" update="senha-label senha-input" />
+											</p:selectOneRadio>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<h:panelGroup id="senha-label">
+												<h:panelGroup
+													rendered="#{configuracaoEmailMB.nova or configuracaoEmailMB.mudarSenha}">
+													<p:outputLabel value="Senha:" styleClass="myLabel"
+														for="senha" />
+												</h:panelGroup>
+											</h:panelGroup>
+
+											<h:panelGroup id="senha-input">
+												<h:panelGroup
+													rendered="#{configuracaoEmailMB.nova or configuracaoEmailMB.mudarSenha}">
+													<p:password styleClass="form-control" maxlength="20"
+														value="#{configuracaoEmailMB.configuracaoEmail.password}"
+														required="true" id="senha" placeholder="Insira a senha"
+														requiredMessage="Campo 'Senha' é obrigatório!" />
+												</h:panelGroup>
+											</h:panelGroup>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
+					</div>
+
+				</p:panel>
+
+				<div class="panel-footer">
+					<h:panelGrid columns="3">
+
+						<h:panelGroup
+							rendered="#{configuracaoEmailMB.configuracaoEmail.id == null}">
+							<div class="col-12 md-4 lg-3 g-4">
+								<p:commandButton styleClass="btn btn-primary" value="Salvar"
+									icon="fa fa-floppy-o" action="#{configuracaoEmailMB.save}"
+									update="frm" />
+							</div>
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{configuracaoEmailMB.configuracaoEmail.id != null}">
+							<div class="col-12 md-4 lg-3 g-4">
+								<p:commandButton value="Atualizar" icon="fa fa-floppy-o"
+									update="msg" action="#{configuracaoEmailMB.update}"
+									styleClass="btn btn-primary" oncomplete="goToTop()" />
+							</div>
+						</h:panelGroup>
+						<div class="col-12 md-4 lg-3 g-4">
+							<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+								immediate="true" ajax="false" icon="fa fa-ban"
+								action="/private/dashboard/dashboard.xhtml" />
+						</div>
+
+
+					</h:panelGrid>
+				</div>
+			</div>
+		</h:form>
+
+		<h:form id="form-cadastro-email">
+			<p:dialog modal="true" id="dados-email" widgetVar="dados-email"
+				resizable="false" width="70%" height="350px">
+
+				<f:facet name="header">
+						#{operacaoMB.itemOperacaoMetaColaborador.metaFinal == null ? 'Adicionar item' :
+						'Atualizar item'}
+						</f:facet>
+
+				<p:messages showDetail="true" autoUpdate="true" closable="true"
+					id="msg-adicionar-item-colaborador" />
+
+				<h:panelGrid columns="4" style="margin-top: 10px;" cellpadding="5px"
+					id="grid-cadastro-email">
+
+					<h:panelGroup>
+						<p:outputLabel value="Categoria:" styleClass="myLabel"
+							style="vertical-align: text-top;" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<br />
+						<div style="margin-top: 6px" />
+						<p:selectOneMenu required="true"
+							requiredMessage="Selecione a categoria"
+							value="#{configuracaoEmailMB.itemEmailConfiguracao.perfil}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{configuracaoEmailMB.perfisEmail()}"
+								var="e" itemLabel="#{e.descricao}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel value="E-mail:" styleClass="myLabel"
+							style="vertical-align: text-top;" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<br />
+						<div style="margin-top: 6px" />
+						<p:inputText required="true" id="faixaInicial" size="70"
+							requiredMessage="Campo 'E-mail' é obrigatório!"
+							value="#{configuracaoEmailMB.itemEmailConfiguracao.email}" />
+					</h:panelGroup>
+				</h:panelGrid>
+				<p:separator />
+				<div class="panel-footer">
+					<h:panelGrid columns="3">
+						<p:commandButton value="Adicionar" styleClass="btn-blue"
+							update=":frm:tabela-email grid-cadastro-email msg-adicionar-item-colaborador"
+							action="#{configuracaoEmailMB.addItemEmailConfiguracao()}"
+							icon="fa fa-plus"
+							rendered="#{configuracaoEmailMB.itemEmailConfiguracao.email == null}" />
+
+						<p:commandButton value="Atualizar" styleClass="btn-green"
+							oncomplete="PF('dadosemail').hide()" icon="fa fa-refresh"
+							update=":frm:tabela-email"
+							action="#{configuracaoEmailMB.updateItemEmailConfiguracao()}"
+							rendered="#{not empty configuracaoEmailMB.itemEmailConfiguracao.email}" />
+
+						<p:commandButton value="Cancelar" styleClass="btn-red"
+							icon="fa fa-close" process="@this"
+							oncomplete="PF('dados-email').hide()" immediate="true" />
+
+						<p:spacer width="20" height="0" />
+					</h:panelGrid>
+				</div>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

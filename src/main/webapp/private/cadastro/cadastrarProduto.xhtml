@@ -1,0 +1,145 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{produtoMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as produtoes cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{produtoMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as produtoes cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Cadastrar produto</ui:define>
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="produto.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Cadastrar Produto"
+			rendered="#{produtoMB.produto.id == null}" />
+		<h:outputText value="Atualizar Produto"
+			rendered="#{produtoMB.produto.id != null}" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Informe campos obrigatórios para cadastrar o produto"
+			rendered="#{produtoMB.produto.id == null}" />
+		<h:outputText
+			value="Informe campos obrigatórios para atualizar o produto."
+			rendered="#{produtoMB.produto.id != null}" />
+	</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="Formulario">
+			<p:messages autoUpdate="true" closable="true" />
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<p:panel header="Dados pessoais">
+					<div class="ui-g-12 ui-md-6 ui-lg-12">
+						<h:outputText value="Nome: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<p:inputText required="true"
+							requiredMessage="Campo 'Nome' é obrigatório!"
+							value="#{produtoMB.produto.nome}">
+						</p:inputText>
+					</div>
+					
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="Referência: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+						<p:inputText required="true"
+							requiredMessage="Campo 'Referência' é obrigatório!"
+							value="#{produtoMB.produto.referencia}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="Código GTIN (EAN-13): " styleClass="myLabel" />
+						<p:inputText 
+							value="#{produtoMB.produto.codigoGTIN}">
+						</p:inputText>
+					</div>
+					
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<h:outputText value="Loja: " styleClass="myLabel" />
+						<p:selectOneMenu id="loja" autoWidth="false"
+							value="#{produtoMB.produto.unidade}"
+							converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+							converter="genericConverter">
+							<f:selectItem itemLabel="Selecione a unidade" noSelectionOption="true" />
+							<f:selectItems value="#{unidadeMB.list()}" var="u"
+								itemLabel="#{unidadeMB.unidade}" />
+						</p:selectOneMenu>
+					</div>
+				</p:panel>
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+<!-- 				<div class="ui-g-12 ui-md-6 ui-lg-12"> -->
+
+<!-- 					<h:outputText value="Observação: " styleClass="myLabel" /> -->
+<!-- 					<p:inputTextarea cols="80" rows="6" value="#{produtoMB.produto.observacao}"> -->
+<!-- 					</p:inputTextarea> -->
+<!-- 				</div> -->
+
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<h:panelGroup rendered="#{produtoMB.produto.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Salvar" icon="fa fa-floppy-o"
+							styleClass="btn btn-primary" action="#{produtoMB.save}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{produtoMB.produto.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Atualizar" icon="fa fa-floppy-o"
+							styleClass="btn-green" action="#{produtoMB.update}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{produtoMB.produto.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="/private/dashboard/dashboard.xhtml" immediate="true"
+							icon="fa fa-ban" ajax="false" />
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{produtoMB.produto.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="#{produtoMB.goToList}" immediate="true"
+							icon="fa fa-ban" ajax="false" />
+					</div>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

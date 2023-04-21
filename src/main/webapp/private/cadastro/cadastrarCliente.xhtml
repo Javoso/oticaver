@@ -1,0 +1,216 @@
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="#{clienteMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as clientees cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="links-xs">
+		<h:form>
+			<p:commandLink action="#{clienteMB.goToList()}" immediate="true"
+				title="Clique neste botão para listar as clientees cadastrados no sistema."
+				styleClass="btn btn-orange">
+				<div class="fa fa-list-alt icon-link" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="titulo-pagina">Cadastrar cliente</ui:define>
+	<ui:define name="imagem">
+		<h:graphicImage library="img" name="team.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Cadastrar Cliente"
+			rendered="#{clienteMB.cliente.id == null}" />
+		<h:outputText value="Atualizar Cliente"
+			rendered="#{clienteMB.cliente.id != null}" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText
+			value="Informe campos obrigatórios para cadastrar o cliente"
+			rendered="#{clienteMB.cliente.id == null}" />
+		<h:outputText
+			value="Informe campos obrigatórios para atualizar o cliente."
+			rendered="#{clienteMB.cliente.id != null}" />
+	</ui:define>
+
+
+	<ui:define name="conteudo">
+		<h:form id="Formulario">
+			<p:messages autoUpdate="true" closable="true" />
+
+			<div jsf:id="panel-filter" class="ui-fluid ui-g">
+
+				<p:panel header="Dados pessoais" toggleable="true" toggleSpeed="500">
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<h:outputText value="Tipo de Cliente " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+
+						<p:selectOneRadio id="tipo" autoWidth="false"
+							value="#{clienteMB.cliente.tipoPessoa}">
+							<f:selectItems value="#{clienteMB.tiposPessoa}" var="p"
+								itemLabel="#{p.tipoDescricao}" />
+							<p:ajax update="group_pessoa_fisica" />
+						</p:selectOneRadio>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<h:outputText value="Loja: " styleClass="myLabel" />
+						<h:outputText value=" * " styleClass="campoObrigatorio" />
+
+						<p:selectOneMenu id="loja" autoWidth="false"
+							value="#{clienteMB.cliente.loja}"
+							converterMessage="Não foi possível selecionar a loja(Erro ao converter o objeto)"
+							converter="genericConverter">
+							<f:selectItem itemLabel="Selecione loja" noSelectionOption="true" />
+							<f:selectItems value="#{lojaMB.lojas}" var="loja"
+								itemLabel="#{loja.nome}" />
+						</p:selectOneMenu>
+					</div>
+					<h:panelGroup id="group_pessoa_fisica">
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<h:outputText value="Nome: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CPF'}" />
+							<h:outputText value="Razão Social: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CNPJ'}" />
+							<h:outputText value="Nome/Razão Social: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa ne 'CPF' and clienteMB.cliente.tipoPessoa ne 'CNPJ'}" />
+							<h:outputText value=" * " styleClass="campoObrigatorio" />
+							<p:inputText required="true"
+								requiredMessage="Campo 'Nome' é obrigatório!"
+								value="#{clienteMB.cliente.nome}">
+							</p:inputText>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-6">
+							<h:outputText value="Apelido: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CPF'}" />
+							<h:outputText value="Nome Fasntasia: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CNPJ'}" />
+							<h:outputText value="Apelido/Nome Fantasia: "
+								styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa ne 'CPF' and clienteMB.cliente.tipoPessoa ne 'CNPJ'}" />
+							<p:inputText value="#{clienteMB.cliente.apelido}">
+							</p:inputText>
+						</div>
+						<div class="ui-g-12 ui-md-6 ui-lg-4">
+							<h:outputText value="CPF: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CPF'}" />
+							<h:outputText value="CNPJ: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CNPJ'}" />
+							<h:outputText value="CPF/CNPJ: " styleClass="myLabel"
+								rendered="#{clienteMB.cliente.tipoPessoa ne 'CPF' and clienteMB.cliente.tipoPessoa ne 'CNPJ'}" />
+							<p:inputMask mask="999.999.999-99"
+								value="#{clienteMB.cliente.apelido}"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CPF'}"/>
+							<p:inputMask mask="99.999.999/9999-99"
+								value="#{clienteMB.cliente.apelido}"
+								rendered="#{clienteMB.cliente.tipoPessoa eq 'CNPJ'}"/>
+
+						</div>
+						<h:panelGroup rendered="#{clienteMB.cliente.tipoPessoa eq 'CPF'}">
+							<div class="ui-g-12 ui-md-6 ui-lg-4">
+								<h:outputText value="RG: " styleClass="myLabel" />
+								<p:inputText value="#{clienteMB.cliente.rg}">
+								</p:inputText>
+							</div>
+							<div class="ui-g-12 ui-md-6 ui-lg-4">
+								<h:outputText value="Data de Nascimento: " styleClass="myLabel" />
+								<p:calendar value="#{clienteMB.cliente.dataNascimento}"
+									pattern="dd/mm/yyyy">
+								</p:calendar>
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+				</p:panel>
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<p:panel header="Endereço" toggleable="true" toggleSpeed="500">
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+						<h:outputText value="CEP: " styleClass="myLabel" />
+						<p:inputMask mask="99999-999" value="#{clienteMB.cliente.cep}">
+						</p:inputMask>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-8">
+						<h:outputText value="Endereço: " styleClass="myLabel" />
+						<p:inputText value="#{clienteMB.cliente.endereco}" />
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="Bairro: " styleClass="myLabel" />
+						<p:inputText value="#{clienteMB.cliente.bairro}">
+						</p:inputText>
+					</div>
+
+					<div class="ui-g-12 ui-md-6 ui-lg-4">
+
+						<h:outputText value="Cidade: " styleClass="myLabel" />
+						<p:inputText value="#{clienteMB.cliente.cidade}">
+						</p:inputText>
+					</div>
+				</p:panel>
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<div class="ui-g-12 ui-md-6 ui-lg-12">
+
+					<h:outputText value="Observação: " styleClass="myLabel" />
+					<p:inputTextarea cols="80" rows="6"
+						value="#{clienteMB.cliente.observacao}">
+					</p:inputTextarea>
+				</div>
+
+
+				<div class="ui-lg-12" />
+				<br /> <br />
+
+				<h:panelGroup rendered="#{clienteMB.cliente.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Salvar" icon="fa fa-floppy-o"
+							styleClass="btn btn-primary" action="#{clienteMB.save}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{clienteMB.cliente.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton value="Atualizar" icon="fa fa-floppy-o"
+							styleClass="btn-green" action="#{clienteMB.update}"
+							update="@form" />
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{clienteMB.cliente.id == null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="/private/dashboard/dashboard.xhtml" immediate="true"
+							icon="fa fa-ban" ajax="false" />
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{clienteMB.cliente.id != null}">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:commandButton styleClass="btn btn-danger" value="Cancelar"
+							action="#{clienteMB.goToList}" immediate="true" icon="fa fa-ban"
+							ajax="false" />
+					</div>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
